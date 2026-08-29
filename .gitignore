@@ -1,0 +1,41 @@
+# ---- 日志 ----
+*.log
+*.err
+
+# ---- Python ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ---- 运行时数据 / 内存状态 ----
+memory_state*.json
+strategy_memory*.json
+*.json.bak
+
+# ---- 二进制 / 演示文件 ----
+*.pdf
+*.pptx
+factorMiner_text.txt
+factorMiner_*.md
+
+# ---- 临时文件 ----
+_tmp_*
+_csi300.txt
+_csi300_*.txt
+*.html.bak
+
+# ---- 编辑器 ----
+.vscode/
+.idea/
+
+# ---- 本地工具索引 ----
+.codegraph/
+.omo/
+
+# ---- 环境 ----
+.env
+.env.*
+
+# ---- �����������վ ----
+_trash/
