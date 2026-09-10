@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List
 import json
-from 策略回测.step2_模板与情境.context import WindowContext, context_similarity
+from strategy_backtest.step2_template_context.context import WindowContext, context_similarity
 
 
 @dataclass

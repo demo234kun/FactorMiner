@@ -16,13 +16,13 @@ import json
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 import numpy as np
-from 策略回测.step1_数据适配.strategy_data import StrategyDataset, generate_strategy_data
-from 策略回测.step2_模板与情境.templates import build_templates, StrategyTemplate
-from 策略回测.step2_模板与情境.context import extract_context, WindowContext
-from 策略回测.step3_回测引擎.engine import backtest, BacktestResult
-from 策略回测.step4_策略进化.memory import StrategyMemory, StrategyExperience
-from FACTOR.step2_因子挖掘 import expression_engine as E
-from FACTOR.step2_因子挖掘.llm_proposer import LLMProposer
+from strategy_backtest.step1_data_adapter.strategy_data import StrategyDataset, generate_strategy_data
+from strategy_backtest.step2_template_context.templates import build_templates, StrategyTemplate
+from strategy_backtest.step2_template_context.context import extract_context, WindowContext
+from strategy_backtest.step3_backtest_engine.engine import backtest, BacktestResult
+from strategy_backtest.step4_strategy_evolution.memory import StrategyMemory, StrategyExperience
+from FACTOR.step2_factor_mining import expression_engine as E
+from FACTOR.step2_factor_mining.llm_proposer import LLMProposer
 
 
 # ---------------- 2024 训练：建立记忆 ---------------- #
@@ -251,7 +251,7 @@ def run_pipeline(
     strategies 为 None 时用内置模板库；Step2 可传入基于已挖掘因子的策略。
     ds 为 None 时自动生成合成数据；Step3 可传入真实 Qlib 数据集（StrategyDataset）。
     """
-    from 策略回测.step1_数据适配.strategy_data import generate_strategy_data, slice_dataset
+    from strategy_backtest.step1_data_adapter.strategy_data import generate_strategy_data, slice_dataset
 
     if ds is None:
         ds = generate_strategy_data(n_assets=n_assets, n_periods=n_periods, seed=seed)
@@ -267,8 +267,8 @@ def run_pipeline(
     llm = None
     if use_llm:
         try:
-            from FACTOR.step2_因子挖掘.llm_proposer import LLMProposer
-            from FACTOR.step1_数据接入.spec import LLMConfig
+            from FACTOR.step2_factor_mining.llm_proposer import LLMProposer
+            from FACTOR.step1_data_ingestion.spec import LLMConfig
             llm = LLMProposer(LLMConfig())
         except Exception:
             llm = None

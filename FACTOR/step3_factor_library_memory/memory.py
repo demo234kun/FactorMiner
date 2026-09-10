@@ -11,8 +11,8 @@ from typing import List, Optional
 import json
 import os
 import re
-from FACTOR.step1_数据接入.spec import MemoryState, Trajectory, CandidateResult, Factor, MiningConfig
-from FACTOR.step2_因子挖掘.operators import OPERATORS
+from FACTOR.step1_data_ingestion.spec import MemoryState, Trajectory, CandidateResult, Factor, MiningConfig
+from FACTOR.step2_factor_mining.operators import OPERATORS
 
 
 def _template(formula: str) -> str:

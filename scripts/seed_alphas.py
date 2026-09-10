@@ -23,10 +23,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from factorminer.web._store import _store
-from FACTOR.step1_数据接入.spec import SqlConfig, Signal
-from FACTOR.step1_数据接入.data_sources import SqlSource
-from FACTOR.step2_因子挖掘.expression_engine import ExpressionEngine
-from FACTOR.step2_因子挖掘.evaluation import factor_diagnostics
+from FACTOR.step1_data_ingestion.spec import SqlConfig, Signal
+from FACTOR.step1_data_ingestion.data_sources import SqlSource
+from FACTOR.step2_factor_mining.expression_engine import ExpressionEngine
+from FACTOR.step2_factor_mining.evaluation import factor_diagnostics
 
 URI = os.environ.get("FACTORMINER_SQL_URI",
                      "postgresql+psycopg2://quant:quant@localhost:5432/quant").replace("db:5432", "localhost:5432")

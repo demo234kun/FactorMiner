@@ -19,10 +19,10 @@ import re
 import random
 from typing import List, Optional
 
-from FACTOR.step1_数据接入.spec import LLMConfig, MarketData
-from FACTOR.step2_因子挖掘.llm_proposer import LLMProposer
-from FACTOR.step2_因子挖掘.expression_engine import ExpressionEngine
-from 策略回测.step2_模板与情境.templates import StrategyTemplate
+from FACTOR.step1_data_ingestion.spec import LLMConfig, MarketData
+from FACTOR.step2_factor_mining.llm_proposer import LLMProposer
+from FACTOR.step2_factor_mining.expression_engine import ExpressionEngine
+from strategy_backtest.step2_template_context.templates import StrategyTemplate
 
 _KNOWN_CATEGORIES = ["动量", "反转", "波动率", "流动性", "趋势", "多因子",
                      "风险平价", "统计", "微观结构", "因子策略", "自定义"]

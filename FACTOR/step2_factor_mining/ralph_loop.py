@@ -8,14 +8,14 @@ ralph_loop.py —— FactorMiner 主循环（Ralph Loop）
 from __future__ import annotations
 import sys
 from typing import List, Optional
-from FACTOR.step1_数据接入.spec import (
+from FACTOR.step1_data_ingestion.spec import (
     DataConfig, MiningConfig, LLMConfig, LibraryResult, Trajectory, Factor, MarketData,
 )
-from FACTOR.step1_数据接入.data_sources import get_data_source
-from FACTOR.step2_因子挖掘.expression_engine import ExpressionEngine, ExpressionError
-from FACTOR.step2_因子挖掘.evaluation import validate_batch
-from FACTOR.step3_因子库与记忆.memory import Memory
-from FACTOR.step2_因子挖掘.llm_proposer import LLMProposer
+from FACTOR.step1_data_ingestion.data_sources import get_data_source
+from FACTOR.step2_factor_mining.expression_engine import ExpressionEngine, ExpressionError
+from FACTOR.step2_factor_mining.evaluation import validate_batch
+from FACTOR.step3_factor_library_memory.memory import Memory
+from FACTOR.step2_factor_mining.llm_proposer import LLMProposer
 
 
 def run(

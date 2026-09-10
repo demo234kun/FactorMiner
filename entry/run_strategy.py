@@ -14,14 +14,14 @@ import sys as _s, os as _o
 _s.path.insert(0, _o.path.dirname(_o.path.dirname(_o.path.abspath(__file__))))
 import argparse
 import tempfile
-from 策略回测.step4_策略进化.agent import run_pipeline
-from 策略回测.step2_模板与情境.templates import build_templates, build_factor_templates
+from strategy_backtest.step4_strategy_evolution.agent import run_pipeline
+from strategy_backtest.step2_template_context.templates import build_templates, build_factor_templates
 
 
 def _mine_factor_library(use_llm: bool):
     """跑一轮因子挖掘，返回 Factor 列表（供策略层复用）。"""
-    from FACTOR.step1_数据接入.spec import DataConfig, MiningConfig, LLMConfig
-    from FACTOR.step2_因子挖掘.ralph_loop import run
+    from FACTOR.step1_data_ingestion.spec import DataConfig, MiningConfig, LLMConfig
+    from FACTOR.step2_factor_mining.ralph_loop import run
 
     data_cfg = DataConfig(source="synthetic", market="csi500", freq="10min",
                           start="2024-01-01", end="2024-12-31",

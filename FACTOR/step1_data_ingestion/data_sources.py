@@ -10,7 +10,7 @@ from typing import Optional
 import os
 import numpy as np
 import pandas as pd
-from FACTOR.step1_数据接入.spec import MarketData, DataConfig, SqlConfig
+from FACTOR.step1_data_ingestion.spec import MarketData, DataConfig, SqlConfig
 
 
 # --------------------------------------------------------------------------- #

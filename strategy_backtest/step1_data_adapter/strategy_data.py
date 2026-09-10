@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from typing import List, Tuple
 import numpy as np
 import pandas as pd
-from FACTOR.step1_数据接入.spec import MarketData
+from FACTOR.step1_data_ingestion.spec import MarketData
 
 
 @dataclass

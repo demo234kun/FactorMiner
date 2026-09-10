@@ -14,16 +14,16 @@ import numpy as np
 from fastapi import FastAPI, HTTPException, Form
 from fastapi.responses import HTMLResponse
 
-from FACTOR.step1_数据接入.spec import DataConfig, MiningConfig, LLMConfig, SqlConfig, Signal
-from FACTOR.step2_因子挖掘.ralph_loop import run, summarize
-from FACTOR.step2_因子挖掘.evaluation import correlation
-from FACTOR.step2_因子挖掘.expression_engine import ExpressionEngine
-from FACTOR.step1_数据接入.data_sources import get_data_source, SqlSource
-from 策略回测.step4_策略进化.agent import run_pipeline
-from 策略回测.step1_数据适配.strategy_data import derive_strategy_dataset
-from 策略回测.step2_模板与情境.templates import build_templates
-from 策略回测.step2_模板与情境.strategy_generator import generate_strategies
-from 策略回测.step3_回测引擎.backtest_report import build_backtest_report, backtest_template
+from FACTOR.step1_data_ingestion.spec import DataConfig, MiningConfig, LLMConfig, SqlConfig, Signal
+from FACTOR.step2_factor_mining.ralph_loop import run, summarize
+from FACTOR.step2_factor_mining.evaluation import correlation
+from FACTOR.step2_factor_mining.expression_engine import ExpressionEngine
+from FACTOR.step1_data_ingestion.data_sources import get_data_source, SqlSource
+from strategy_backtest.step4_strategy_evolution.agent import run_pipeline
+from strategy_backtest.step1_data_adapter.strategy_data import derive_strategy_dataset
+from strategy_backtest.step2_template_context.templates import build_templates
+from strategy_backtest.step2_template_context.strategy_generator import generate_strategies
+from strategy_backtest.step3_backtest_engine.backtest_report import build_backtest_report, backtest_template
 from ._store import _store
 
 app = FastAPI(title="FactorMiner 复刻版", version="0.1.0")
@@ -281,7 +281,7 @@ def _ls_curve(signal: np.ndarray, target: np.ndarray):
 
 
 def _ic_series(signal: np.ndarray, target: np.ndarray):
-    from FACTOR.step1_数据接入.spec import spearman_per_t
+    from FACTOR.step1_data_ingestion.spec import spearman_per_t
     per_t = spearman_per_t(signal, target)
     return np.nan_to_num(per_t, 0.0)
 
@@ -711,8 +711,8 @@ def _chat_llm(system: str, user: str, max_tokens: int = 800) -> str:
 
 def _chat_handle_strategy(text: str, md) -> dict:
     """生成策略 → 回测 → 入库。返回 {html, reply}。"""
-    from 策略回测.step2_模板与情境.strategy_generator import generate_strategies
-    from 策略回测.step3_回测引擎.backtest_report import backtest_template
+    from strategy_backtest.step2_template_context.strategy_generator import generate_strategies
+    from strategy_backtest.step3_backtest_engine.backtest_report import backtest_template
     strategies = generate_strategies(text, md=md, n=3)
     if not strategies:
         return {"html": "<div class='t'>未能生成策略，请换个说法。</div>", "reply": "未能生成策略"}
@@ -741,8 +741,8 @@ def _chat_handle_strategy(text: str, md) -> dict:
 
 def _chat_handle_factor(text: str, md) -> dict:
     """生成因子 → 完整诊断(IC/ICIR/ave|p|/冗余) → LLM解释 → 入库。返回 {html, reply}。"""
-    from FACTOR.step2_因子挖掘.llm_proposer import LLMProposer
-    from FACTOR.step2_因子挖掘.evaluation import factor_diagnostics
+    from FACTOR.step2_factor_mining.llm_proposer import LLMProposer
+    from FACTOR.step2_factor_mining.evaluation import factor_diagnostics
     proposer = LLMProposer(LLMConfig(fallback="template", seed=0))
     formulas = proposer.propose(text, 3, ctx="用户想要一个因子")
     fallback = ["CsRank(Div(Sub($close,Delay($close,20)),Delay($close,20)))",
@@ -931,9 +931,9 @@ def generate(kind: str = Form("strategy"), text: str = Form(...)):
     try:
         if kind == "factor":
             # 因子：用 LLM 生成候选公式 → 求值 → 回测验证 IC → 入库
-            from FACTOR.step1_数据接入.spec import LLMConfig as _LLMConfig
-            from FACTOR.step2_因子挖掘.llm_proposer import LLMProposer as _Proposer
-            from FACTOR.step2_因子挖掘.evaluation import ic as _ic_fn
+            from FACTOR.step1_data_ingestion.spec import LLMConfig as _LLMConfig
+            from FACTOR.step2_factor_mining.llm_proposer import LLMProposer as _Proposer
+            from FACTOR.step2_factor_mining.evaluation import ic as _ic_fn
             proposer = _Proposer(_LLMConfig(fallback="template", seed=0))
             formulas = proposer.propose(text.strip(), 3, ctx="用户想要一个因子")
             eng = ExpressionEngine()
@@ -944,8 +944,8 @@ def generate(kind: str = Form("strategy"), text: str = Form(...)):
                 except Exception:
                     continue
                 # 相关性校验（与库内因子）
-                from FACTOR.step1_数据接入.spec import Signal as _Sig
-                from FACTOR.step2_因子挖掘.evaluation import correlation as _corr
+                from FACTOR.step1_data_ingestion.spec import Signal as _Sig
+                from FACTOR.step2_factor_mining.evaluation import correlation as _corr
                 corr_ok = True
                 for libf in _store.list_factors():
                     try:
@@ -966,8 +966,8 @@ def generate(kind: str = Form("strategy"), text: str = Form(...)):
                 result["saved"].append(f"因子 {fid} 已入库")
         else:
             # 策略：生成策略模板 → 回测 → 入库
-            from 策略回测.step2_模板与情境.strategy_generator import generate_strategies
-            from 策略回测.step3_回测引擎.backtest_report import backtest_template
+            from strategy_backtest.step2_template_context.strategy_generator import generate_strategies
+            from strategy_backtest.step3_backtest_engine.backtest_report import backtest_template
             strategies = generate_strategies(text.strip(), md=md, n=3)
             for tp in strategies:
                 try:

@@ -19,14 +19,14 @@ import sys
 import json
 from typing import Any, Dict
 
-from FACTOR.step1_数据接入.spec import DataConfig, MiningConfig, LLMConfig, SqlConfig
-from FACTOR.step2_因子挖掘.ralph_loop import run, summarize
-from FACTOR.step2_因子挖掘.expression_engine import ExpressionEngine, ExpressionError
-from FACTOR.step2_因子挖掘.evaluation import ic, icir
-from FACTOR.step1_数据接入.data_sources import SyntheticSource, SqlSource
-from 策略回测.step4_策略进化.agent import train_2024, evolve_2025
-from 策略回测.step1_数据适配.strategy_data import generate_strategy_data, slice_dataset, derive_strategy_dataset
-from 策略回测.step4_策略进化.memory import StrategyMemory
+from FACTOR.step1_data_ingestion.spec import DataConfig, MiningConfig, LLMConfig, SqlConfig
+from FACTOR.step2_factor_mining.ralph_loop import run, summarize
+from FACTOR.step2_factor_mining.expression_engine import ExpressionEngine, ExpressionError
+from FACTOR.step2_factor_mining.evaluation import ic, icir
+from FACTOR.step1_data_ingestion.data_sources import SyntheticSource, SqlSource
+from strategy_backtest.step4_strategy_evolution.agent import train_2024, evolve_2025
+from strategy_backtest.step1_data_adapter.strategy_data import generate_strategy_data, slice_dataset, derive_strategy_dataset
+from strategy_backtest.step4_strategy_evolution.memory import StrategyMemory
 
 CACHE: Dict[str, Any] = {"result": None}
 STRAT_CACHE: Dict[str, Any] = {"ds": None, "ds25": None, "memory": None}
@@ -149,8 +149,8 @@ def evolve_strategy(use_llm: bool = True) -> dict:
     llm = None
     if use_llm:
         try:
-            from FACTOR.step2_因子挖掘.llm_proposer import LLMProposer
-            from FACTOR.step1_数据接入.spec import LLMConfig
+            from FACTOR.step2_factor_mining.llm_proposer import LLMProposer
+            from FACTOR.step1_data_ingestion.spec import LLMConfig
             llm = LLMProposer(LLMConfig())
         except Exception:
             llm = None

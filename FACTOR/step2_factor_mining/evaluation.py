@@ -11,7 +11,7 @@ evaluation.py —— 评估引擎
 from __future__ import annotations
 from typing import List, Optional, Tuple
 import numpy as np
-from FACTOR.step1_数据接入.spec import (
+from FACTOR.step1_data_ingestion.spec import (
     MarketData, Signal, Factor, CandidateResult, MiningConfig,
     spearman_per_t,
 )

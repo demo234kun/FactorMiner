@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List
 import numpy as np
-from 策略回测.step1_数据适配.strategy_data import StrategyDataset
+from strategy_backtest.step1_data_adapter.strategy_data import StrategyDataset
 
 
 @dataclass

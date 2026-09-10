@@ -17,12 +17,12 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from factorminer.web._store import _store
-from FACTOR.step1_数据接入.spec import DataConfig, SqlConfig, LLMConfig, Signal
-from FACTOR.step1_数据接入.data_sources import SyntheticSource, SqlSource
-from FACTOR.step2_因子挖掘.expression_engine import ExpressionEngine
-from FACTOR.step2_因子挖掘.evaluation import factor_diagnostics
-from 策略回测.step2_模板与情境.templates import build_templates
-from 策略回测.step3_回测引擎.backtest_report import build_backtest_report
+from FACTOR.step1_data_ingestion.spec import DataConfig, SqlConfig, LLMConfig, Signal
+from FACTOR.step1_data_ingestion.data_sources import SyntheticSource, SqlSource
+from FACTOR.step2_factor_mining.expression_engine import ExpressionEngine
+from FACTOR.step2_factor_mining.evaluation import factor_diagnostics
+from strategy_backtest.step2_template_context.templates import build_templates
+from strategy_backtest.step3_backtest_engine.backtest_report import build_backtest_report
 
 URI = os.environ.get("FACTORMINER_SQL_URI",
                      "postgresql+psycopg2://quant:quant@localhost:5432/quant")

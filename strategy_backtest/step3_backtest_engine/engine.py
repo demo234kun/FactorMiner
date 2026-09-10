@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-engine.py —— 策略回测与指标
+engine.py —— strategy_backtest与指标
 
 给定 signal (T,M) 与目标 target (T,M)，每日截面排序形成多空/纯多权重，
 计算组合收益与风险指标。

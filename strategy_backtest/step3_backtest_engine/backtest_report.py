@@ -9,12 +9,12 @@ backtest_report.py —— 标准量化回测报告（证明策略价值）
   - 分年表现、分段(每50期)表现
   - 多空/纯多月度收益概览
 
-依赖：策略回测/step3_回测引擎/engine.backtest（真实权重+组合收益计算）
+依赖：strategy_backtest/step3_回测引擎/engine.backtest（真实权重+组合收益计算）
 """
 from __future__ import annotations
 from typing import Optional
 import numpy as np
-from 策略回测.step3_回测引擎.engine import backtest
+from strategy_backtest.step3_backtest_engine.engine import backtest
 
 
 def _annualized(total_ret: float, n_periods: int, periods_per_year: int = 252) -> float:
@@ -120,7 +120,7 @@ def backtest_template(
     periods_per_year: int = 252,
 ) -> dict:
     """直接对 StrategyTemplate 在 MarketData 上回测，返回完整报告。"""
-    from FACTOR.step2_因子挖掘.expression_engine import ExpressionEngine
+    from FACTOR.step2_factor_mining.expression_engine import ExpressionEngine
     sig = ExpressionEngine().evaluate(template.signal, md)
     return build_backtest_report(
         sig.values, md.target, md.times,

@@ -25,12 +25,12 @@ _s.path.insert(0, _o.path.dirname(_o.path.dirname(_o.path.abspath(__file__))))
 import argparse
 from collections import Counter
 
-from FACTOR.step1_数据接入.spec import DataConfig, MiningConfig, LLMConfig, SqlConfig
-from FACTOR.step2_因子挖掘.ralph_loop import run
-from FACTOR.step1_数据接入.data_sources import get_data_source, SqlSource
-from 策略回测.step1_数据适配.strategy_data import derive_strategy_dataset
-from 策略回测.step4_策略进化.agent import run_pipeline
-from 策略回测.step2_模板与情境.templates import build_factor_templates
+from FACTOR.step1_data_ingestion.spec import DataConfig, MiningConfig, LLMConfig, SqlConfig
+from FACTOR.step2_factor_mining.ralph_loop import run
+from FACTOR.step1_data_ingestion.data_sources import get_data_source, SqlSource
+from strategy_backtest.step1_data_adapter.strategy_data import derive_strategy_dataset
+from strategy_backtest.step4_strategy_evolution.agent import run_pipeline
+from strategy_backtest.step2_template_context.templates import build_factor_templates
 
 
 def main():

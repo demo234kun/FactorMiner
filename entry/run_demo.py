@@ -11,8 +11,8 @@ _s.path.insert(0, _o.path.dirname(_o.path.dirname(_o.path.abspath(__file__))))
 import os
 import sys
 
-from FACTOR.step1_数据接入.spec import DataConfig, MiningConfig, LLMConfig
-from FACTOR.step2_因子挖掘.ralph_loop import run, summarize
+from FACTOR.step1_data_ingestion.spec import DataConfig, MiningConfig, LLMConfig
+from FACTOR.step2_factor_mining.ralph_loop import run, summarize
 
 data_cfg = DataConfig(
     source="synthetic", market="csi500", freq="10min",

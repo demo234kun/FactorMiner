@@ -11,8 +11,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Union
 import numpy as np
-from FACTOR.step2_因子挖掘.operators import OPERATORS, get_operator
-from FACTOR.step1_数据接入.spec import MarketData, Signal
+from FACTOR.step2_factor_mining.operators import OPERATORS, get_operator
+from FACTOR.step1_data_ingestion.spec import MarketData, Signal
 
 
 class ExpressionError(Exception):

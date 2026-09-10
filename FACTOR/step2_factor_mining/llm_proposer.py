@@ -11,9 +11,9 @@ import os
 import re
 from typing import List
 import random
-from FACTOR.step1_数据接入.spec import LLMConfig
-from FACTOR.step2_因子挖掘.operators import OPERATORS, list_operators
-from FACTOR.step2_因子挖掘.expression_engine import _ALIASES
+from FACTOR.step1_data_ingestion.spec import LLMConfig
+from FACTOR.step2_factor_mining.operators import OPERATORS, list_operators
+from FACTOR.step2_factor_mining.expression_engine import _ALIASES
 
 FIELDS = ["$open", "$high", "$low", "$close", "$volume", "$amt", "$vwap", "$returns"]
 WINDOWS = [3, 5, 10, 20, 30, 48]
